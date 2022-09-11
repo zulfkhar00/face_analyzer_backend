@@ -20,4 +20,4 @@ examples = [['harmonal_acne.jpg'],['forehead_wrinkles.jpg'],['oily_skin.jpg']]
 enable_queue=True
 
 gr.Interface(fn=predict,inputs=gr.inputs.Image(shape=(512, 512)),outputs=gr.outputs.Label(num_top_classes=3),title=title,
-             description=description,examples=examples,enable_queue=enable_queue).launch(share=True)
+             description=description,examples=examples,enable_queue=enable_queue).launch()
