@@ -12,7 +12,7 @@ def predict(img):
 
 title = "Face condition Analyzer"
 description = "A face condition detector trained on the custom dataset with fastai. Created using Gradio and HuggingFace Spaces."
-examples = ['harmonal_acne.jpg','forehead_wrinkles.jpg','oily_skin.jpg']
+examples = [['harmonal_acne.jpg'],['forehead_wrinkles.jpg'],['oily_skin.jpg']]
 enable_queue=True
 
 gr.Interface(fn=predict,inputs=gr.inputs.Image(shape=(512, 512)),outputs=gr.outputs.Label(num_top_classes=3),title=title,
