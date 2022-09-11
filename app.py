@@ -1,6 +1,10 @@
 import gradio as gr
 from fastai.vision.all import *
 import skimage
+import pathlib
+
+plt = platform.system()
+if plt == 'Linux': pathlib.WindowsPath = pathlib.PosixPath
 
 learn = load_learner('export.pkl')
 
