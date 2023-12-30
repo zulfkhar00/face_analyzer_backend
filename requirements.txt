@@ -3,3 +3,4 @@ scikit-image
 openpyxl
 pandas
 gradio
+httpx==0.24.1
