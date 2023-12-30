@@ -2,4 +2,4 @@ fastai
 scikit-image
 openpyxl
 pandas
-gradio==3.44.3
+gradio
