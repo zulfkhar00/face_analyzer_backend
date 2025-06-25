@@ -8,7 +8,7 @@ import (
 
 	"github.com/cloudwego/hertz/pkg/app"
 	"github.com/cloudwego/hertz/pkg/protocol/consts"
-	dto "github.com/zulfkhar00/cosmetics-backend/internal/handler/dto/response"
+	"github.com/zulfkhar00/cosmetics-backend/internal/handler/dto"
 	"github.com/zulfkhar00/cosmetics-backend/internal/service"
 )
 
