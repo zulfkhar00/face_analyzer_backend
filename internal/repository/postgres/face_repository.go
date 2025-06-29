@@ -73,3 +73,17 @@ func (r *PostgresFaceRepository) GetUserFaceCondition(uid string) (*domain.Face,
 
 	return face, nil
 }
+
+func (r *PostgresFaceRepository) AddProductToRoutine(uid string, productID string, routineType string) error {
+	query := `
+		INSERT INTO user_skincare_routine (uid, product_id, routine_type)
+		VALUES ($1, $2, $3)
+	`
+
+	_, err := r.db.Exec(query, uid, productID, routineType)
+	if err != nil {
+		return fmt.Errorf("failed to insert skincare routine: %w", err)
+	}
+
+	return nil
+}

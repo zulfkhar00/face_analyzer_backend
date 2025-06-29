@@ -5,6 +5,7 @@ import (
 	"mime/multipart"
 
 	"github.com/zulfkhar00/cosmetics-backend/internal/domain"
+	"github.com/zulfkhar00/cosmetics-backend/internal/handler/dto"
 	"github.com/zulfkhar00/cosmetics-backend/internal/utility"
 	"github.com/zulfkhar00/cosmetics-backend/scripts"
 )
@@ -72,4 +73,13 @@ func (s *faceAnalysisService) GetUserFaceCondition(ctx context.Context, uid stri
 	}
 
 	return face, nil
+}
+
+func (s *faceAnalysisService) AddProductToRoutine(ctx context.Context, uid string, productID string, routineType dto.RoutineType) error {
+	err := s.productRepo.AddProductToRoutine(uid, productID, string(routineType))
+	if err != nil {
+		return err
+	}
+
+	return nil
 }

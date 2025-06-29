@@ -56,6 +56,7 @@ func main() {
 	h.GET("/product/:barcode", productHandler.GetProductByBarcode)
 	h.POST("/face/analyze", faceAnalysisHandler.SendUserFaceImage)
 	h.GET("/face/health_info", faceAnalysisHandler.GetUserFaceCondition)
+	h.POST("/routine/add_product", faceAnalysisHandler.AddProductToRoutine)
 
 	// Start server
 	h.Spin()

@@ -59,3 +59,19 @@ func (h *FaceAnalysisHandler) GetUserFaceCondition(ctx context.Context, c *app.R
 
 	c.JSON(consts.StatusOK, resp)
 }
+
+func (h *FaceAnalysisHandler) AddProductToRoutine(ctx context.Context, c *app.RequestContext) {
+	var req dto.AddProductToRoutineRequest
+	if err := c.BindAndValidate(&req); err != nil {
+		c.JSON(consts.StatusBadRequest, dto.GetUserFaceConditionResponse{Error: errors.New("invalid request data")})
+		return
+	}
+
+	err := h.faceAnalysisService.AddProductToRoutine(ctx, req.UID, req.ProductID, req.RoutineType)
+	if err != nil {
+		c.JSON(consts.StatusInternalServerError, dto.AddProductToRoutineResonse{Error: err})
+		return
+	}
+
+	c.JSON(consts.StatusOK, dto.AddProductToRoutineResonse{Message: "Product added to routine successfully"})
+}

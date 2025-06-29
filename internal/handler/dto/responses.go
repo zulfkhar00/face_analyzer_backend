@@ -26,3 +26,8 @@ type FaceCondition struct {
 	OverallScore     float32            `json:"overallScore"`
 	OverallCondition string             `json:"overallCondition"`
 }
+
+type AddProductToRoutineResonse struct {
+	Message string `json:"message,omitempty"`
+	Error   error  `json:"error,omitempty"`
+}
