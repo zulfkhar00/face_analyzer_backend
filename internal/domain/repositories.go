@@ -4,3 +4,7 @@ package domain
 type ProductRepository interface {
 	GetByBarcode(barcode string) (*Product, error)
 }
+
+type FaceRepository interface {
+	UploadFaceImage(face *Face) error
+}
