@@ -14,4 +14,5 @@ type ProductService interface {
 
 type FaceAnalysisService interface {
 	AnalyzeAndUploadFaceImage(ctx context.Context, uid string, faceImage *multipart.FileHeader) error
+	GetUserFaceCondition(ctx context.Context, uid string) (*domain.Face, error)
 }

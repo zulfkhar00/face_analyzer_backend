@@ -34,3 +34,42 @@ func (r *PostgresFaceRepository) UploadFaceImage(face *domain.Face) error {
 
 	return nil
 }
+
+func (r *PostgresFaceRepository) GetUserFaceCondition(uid string) (*domain.Face, error) {
+	query := `
+		SELECT probabilities, overall_score, overall_condition
+		FROM user_face_condition
+		WHERE uid = $1
+		ORDER BY created_at DESC
+		LIMIT 1
+	`
+
+	row := r.db.QueryRow(query, uid)
+
+	var (
+		probJSON         []byte
+		overallScore     float64
+		overallCondition string
+	)
+
+	if err := row.Scan(&probJSON, &overallScore, &overallCondition); err != nil {
+		if err == sql.ErrNoRows {
+			return nil, fmt.Errorf("no record found for uid: %s", uid)
+		}
+		return nil, fmt.Errorf("failed to scan face condition: %w", err)
+	}
+
+	var probabilities map[string]float64
+	if err := json.Unmarshal(probJSON, &probabilities); err != nil {
+		return nil, fmt.Errorf("failed to unmarshal probabilities: %w", err)
+	}
+
+	face := &domain.Face{
+		UID:              uid,
+		Probabilities:    probabilities,
+		OverallScore:     float32(overallScore),
+		OverallCondition: overallCondition,
+	}
+
+	return face, nil
+}

@@ -3,7 +3,7 @@ import warnings
 import os
 import pathlib
 import json
-from fastai.vision.all import *
+from fastai.vision.all import * # type: ignore
 defaults.verbose = False
 
 

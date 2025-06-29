@@ -64,3 +64,12 @@ func (s *faceAnalysisService) GetFaceHealthScore(ctx context.Context, prediction
 	}
 	return
 }
+
+func (s *faceAnalysisService) GetUserFaceCondition(ctx context.Context, uid string) (*domain.Face, error) {
+	face, err := s.productRepo.GetUserFaceCondition(uid)
+	if err != nil {
+		return nil, err
+	}
+
+	return face, nil
+}

@@ -55,6 +55,7 @@ func main() {
 	// Set up routes
 	h.GET("/product/:barcode", productHandler.GetProductByBarcode)
 	h.POST("/face/analyze", faceAnalysisHandler.SendUserFaceImage)
+	h.GET("/face/health_info", faceAnalysisHandler.GetUserFaceCondition)
 
 	// Start server
 	h.Spin()

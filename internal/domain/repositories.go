@@ -7,4 +7,5 @@ type ProductRepository interface {
 
 type FaceRepository interface {
 	UploadFaceImage(face *Face) error
+	GetUserFaceCondition(uid string) (*Face, error)
 }

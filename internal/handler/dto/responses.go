@@ -10,3 +10,19 @@ type GetProductResponse struct {
 	Ingredients         []string `json:"ingredients"`
 	Source              string   `json:"source"`
 }
+
+type SendUserFaceImageResponse struct {
+	Message string `json:"message,omitempty"`
+	Error   error  `json:"error,omitempty"`
+}
+
+type GetUserFaceConditionResponse struct {
+	FaceCondition FaceCondition `json:"faceCondition,omitempty"`
+	Error         error         `json:"error,omitempty"`
+}
+
+type FaceCondition struct {
+	Probabilities    map[string]float64 `json:"probabilities"`
+	OverallScore     float32            `json:"overallScore"`
+	OverallCondition string             `json:"overallCondition"`
+}
