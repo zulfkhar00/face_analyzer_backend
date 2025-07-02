@@ -1,5 +1,9 @@
 package dto
 
+import (
+	"github.com/zulfkhar00/cosmetics-backend/internal/domain"
+)
+
 type GetProductResponse struct {
 	ID                  string   `json:"id,omitempty"` // omitempty if ID might be empty for external products
 	Barcode             string   `json:"barcode"`
@@ -30,4 +34,14 @@ type FaceCondition struct {
 type AddProductToRoutineResonse struct {
 	Message string `json:"message,omitempty"`
 	Error   error  `json:"error,omitempty"`
+}
+
+type GetRoutinesResponse struct {
+	Routine Routine `json:"routines,omitempty"`
+	Error   error   `json:"error,omitempty"`
+}
+
+type Routine struct {
+	MorningRoutineProducts []domain.Product `json:"morningRoutineProducts"`
+	EveningRoutineProducts []domain.Product `json:"eveningRoutineProducts"`
 }

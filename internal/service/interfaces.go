@@ -17,4 +17,5 @@ type FaceAnalysisService interface {
 	AnalyzeAndUploadFaceImage(ctx context.Context, uid string, faceImage *multipart.FileHeader) error
 	GetUserFaceCondition(ctx context.Context, uid string) (*domain.Face, error)
 	AddProductToRoutine(ctx context.Context, uid string, productID string, routineType dto.RoutineType) error
+	GetRoutines(ctx context.Context, uid string) ([]*domain.UserRoutineProduct, error)
 }

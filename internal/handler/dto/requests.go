@@ -32,3 +32,7 @@ type AddProductToRoutineRequest struct {
 	ProductID   string      `json:"productID" binding:"required"`
 	RoutineType RoutineType `json:"routineType" binding:"required,oneof=morning evening both"`
 }
+
+type GetRoutinesRequest struct {
+	UID string `json:"uid" binding:"required"`
+}

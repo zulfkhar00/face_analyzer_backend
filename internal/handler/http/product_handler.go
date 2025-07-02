@@ -23,12 +23,11 @@ func NewProductHandler(svc service.ProductService) *ProductHandler {
 }
 
 func (h *ProductHandler) GetProductByBarcode(ctx context.Context, c *app.RequestContext) {
-	var req dto.GetProductRequest
-	if err := c.BindAndValidate(&req); err != nil {
-		c.JSON(consts.StatusBadRequest, map[string]string{"error": "Invalid request data"})
+	barcode := c.Param("barcode")
+	if barcode == "" {
+		c.JSON(consts.StatusBadRequest, map[string]string{"error": "Missing barcode in path"})
 		return
 	}
-	barcode := req.Barcode
 
 	product, err := h.productService.GetProductByBarcode(ctx, barcode)
 

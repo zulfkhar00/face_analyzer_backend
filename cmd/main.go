@@ -44,10 +44,10 @@ func main() {
 	openBeautyFactsClient := apiclient.NewOpenBeautyFactsClient(cfg.ExternalAPI.OpenBeautyFactsBaseURL, nil)
 
 	productService := service.NewProductService(postgresProductRepository, openBeautyFactsClient)
-	faceAnalysisServer := service.NewFaceAnalysisService(postgresFaceRepository)
+	faceAnalysisService := service.NewFaceAnalysisService(postgresFaceRepository)
 
 	productHandler := handler.NewProductHandler(productService)
-	faceAnalysisHandler := handler.NewFaceAnalysisHandler(faceAnalysisServer)
+	faceAnalysisHandler := handler.NewFaceAnalysisHandler(faceAnalysisService)
 
 	// create Hertz server
 	h := server.New(server.WithHostPorts(":" + cfg.Server.Port))
@@ -56,7 +56,8 @@ func main() {
 	h.GET("/product/:barcode", productHandler.GetProductByBarcode)
 	h.POST("/face/analyze", faceAnalysisHandler.SendUserFaceImage)
 	h.GET("/face/health_info", faceAnalysisHandler.GetUserFaceCondition)
-	h.POST("/routine/add_product", faceAnalysisHandler.AddProductToRoutine)
+	h.POST("/routines/add_product", faceAnalysisHandler.AddProductToRoutine)
+	h.GET("/routines/get_all", faceAnalysisHandler.GetRoutines)
 
 	// Start server
 	h.Spin()

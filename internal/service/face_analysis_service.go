@@ -11,12 +11,12 @@ import (
 )
 
 type faceAnalysisService struct {
-	productRepo domain.FaceRepository
+	faceRepo domain.FaceRepository
 }
 
-func NewFaceAnalysisService(productRepo domain.FaceRepository) FaceAnalysisService {
+func NewFaceAnalysisService(faceRepo domain.FaceRepository) FaceAnalysisService {
 	return &faceAnalysisService{
-		productRepo: productRepo,
+		faceRepo: faceRepo,
 	}
 }
 
@@ -40,7 +40,7 @@ func (s *faceAnalysisService) AnalyzeAndUploadFaceImage(ctx context.Context, uid
 		OverallCondition: overallCondition,
 	}
 
-	return s.productRepo.UploadFaceImage(face)
+	return s.faceRepo.UploadFaceImage(face)
 }
 
 func (s *faceAnalysisService) GetFaceHealthScore(ctx context.Context, predictions map[string]float64) (score float32, overallCondition string) {
@@ -67,7 +67,7 @@ func (s *faceAnalysisService) GetFaceHealthScore(ctx context.Context, prediction
 }
 
 func (s *faceAnalysisService) GetUserFaceCondition(ctx context.Context, uid string) (*domain.Face, error) {
-	face, err := s.productRepo.GetUserFaceCondition(uid)
+	face, err := s.faceRepo.GetUserFaceCondition(uid)
 	if err != nil {
 		return nil, err
 	}
@@ -76,10 +76,29 @@ func (s *faceAnalysisService) GetUserFaceCondition(ctx context.Context, uid stri
 }
 
 func (s *faceAnalysisService) AddProductToRoutine(ctx context.Context, uid string, productID string, routineType dto.RoutineType) error {
-	err := s.productRepo.AddProductToRoutine(uid, productID, string(routineType))
+	err := s.faceRepo.AddProductToRoutine(uid, productID, string(routineType))
 	if err != nil {
 		return err
 	}
 
 	return nil
+}
+
+func (s *faceAnalysisService) GetRoutines(ctx context.Context, uid string) ([]*domain.UserRoutineProduct, error) {
+	routineProducts, err := s.faceRepo.GetRoutines(ctx, uid)
+	if err != nil {
+		return nil, err
+	}
+
+	for _, routine := range routineProducts {
+		for _, product := range routine.Products {
+			ingredients := make([]string, 0)
+			for _, ingredient := range product.IngredientsWithImpact {
+				ingredients = append(ingredients, ingredient.IngredientName)
+			}
+			product.Ingredients = ingredients
+		}
+	}
+
+	return routineProducts, nil
 }
